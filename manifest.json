@@ -23,8 +23,11 @@
     },
     {
       "matches": ["https://www.youtube.com/results?sp=EgIQA1AU&*"],
-      "css": ["style.css","font-awesome.min.css"],
-      "js": ["jquery.js", "myscript2.js"]
+      "css": ["style.css"],
+      "js": ["jquery.js", "fontawesome.js", "myscript2.js"]
     }
+  ],
+  "web_accessible_resources": [
+    "style.css"
   ]
 }

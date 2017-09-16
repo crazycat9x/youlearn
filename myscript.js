@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 $("#search-form").append("<a id=\"learn-search\">You Learn</a>");
 $("#learn-search").css({
   "margin-left": "20px",
@@ -18,4 +16,3 @@ $("#learn-search").click(function() {
   }, function(response) {
   });
 });
->>>>>>> aa1736b223d262dea9fb7e9c446579867b5f8f3c
