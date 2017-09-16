@@ -1,6 +1,6 @@
 var rating = "\
-<div class='rating-stars text-center'>\
-<ul id='stars'>\
+</br><div class='rating-stars text-center'>\
+<span class=\'ratingLabel\'>Rating:</span> \<ul id='stars'>\
   <li class='star' title='Poor' data-value='1'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
@@ -17,7 +17,12 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
-</div>"
+</div>\
+<select>\
+<option value=\"useful\">Useful</option>\
+<option value=\"veryUseful\">Very Useful</option>\
+<option value=\"extremelyUseful\">Opel</option>\
+</select>"
 $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
 console.log(rating)
 $(document).ready(function(){

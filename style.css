@@ -25,3 +25,10 @@
 .rating-stars ul > li.star.selected > i.fa {
   color:#FF912C;
 }
+.rating-stars.text-center {
+  display: inline-flex;
+}
+
+.ratingLabel{
+  padding-top: 5px;
+}
