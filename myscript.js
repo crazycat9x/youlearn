@@ -16,3 +16,10 @@ $("#learn-search").click(function() {
   }, function(response) {
   });
 });
+
+/*
+<script>
+var x = document.getElementById("style-scope ytd-playlist-thumbnail");
+//Insert for loop to check each element by rating
+</script>
+*/
