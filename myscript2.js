@@ -18,7 +18,31 @@ var rating = "\
   </li>\
 </ul>\
 </div>"
+
+var ratingScore = "\
+<div class='rating-stars text-center'>\
+<ul id='overallStars'>\
+  <li class='star overall' title='Poor' data-value='1'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Fair' data-value='2'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Good' data-value='3'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Excellent' data-value='4'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='WOW!!!' data-value='5'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='scoreNum'>3.5</li>\
+</ul>\
+</div>"
+$(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer")
 $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
+
 //console.log(rating)
 $(document).ready(function(){
     
