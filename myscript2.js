@@ -19,7 +19,7 @@ var rating = "\
 </ul>\
 </div>"
 $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
-console.log(rating)
+//console.log(rating)
 $(document).ready(function(){
     
     /* 1. Visualizing things on Hover - See next part for action on click */
@@ -58,9 +58,9 @@ $(document).ready(function(){
       
       // JUST RESPONSE (Not needed)
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-      console.log(ratingValue)
+      //console.log(ratingValue)
       var videoId = $('#stars li.selected').last().parent().parent().parent().find("a").attr('href');
-      console.log(videoId);
+      //console.log(videoId);
       
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
       });
