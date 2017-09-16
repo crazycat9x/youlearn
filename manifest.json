@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "You Learn",
+  "description": "Making youtube a better learning platform",
+  "version": "1.0",
+  "background": {
+    "persistent": false,
+    "scripts": ["bg.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
+      "css": ["style.css"],
+      "js": ["jquery.js", "myscript.js"]
+    }
+  ]
+}
