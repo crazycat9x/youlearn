@@ -19,6 +19,11 @@
       "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
       "css": ["style.css"],
       "js": ["jquery.js", "myscript.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/results?sp=EgIQA1AU&*"],
+      "css": ["style.css","font-awesome.min.css"],
+      "js": ["jquery.js", "myscript2.js"]
     }
   ]
 }
