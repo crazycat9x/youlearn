@@ -1,3 +1,18 @@
+// Set the configuration for your app
+// TODO: Replace with your project's config object
+var config = {
+  apiKey: "AIzaSyCMVhTIfWJHrHaquKzTpIoLHjzfUeOUnpM",
+  authDomain: "pennapps2017w.firebaseapp.com",
+  databaseURL: "https://pennapps2017w.firebaseio.com",
+  projectId: "pennapps2017w",
+  storageBucket: "pennapps2017w.appspot.com",
+  messagingSenderId: "841640942330"
+};
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var database = firebase.database();
+
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
   if (request.clicked == "yes") {
     var redirectUrl = urlCreator(request.searchTerm);
