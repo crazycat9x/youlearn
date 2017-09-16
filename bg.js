@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-  if (request.clicked == "yes") {
+  if (request.type == "search") {
     var redirectUrl = urlCreator(request.searchTerm);
     chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {
       chrome.tabs.update( tabs[0].id, { url: redirectUrl } ); 
@@ -26,3 +26,12 @@ function urlCreator(input) {
   output = "https://www.youtube.com/results?sp=EgIQA1AU&q=" + input.replace(" ", "%20");
   return output
 }
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.type == "click-star") {
+    database.ref("users/" + "1").set({
+      videoId: request.videoLink,
+      rating: request.rating
+    });
+  }
+});
