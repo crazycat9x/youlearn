@@ -29,23 +29,35 @@ function urlCreator(input) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.type == "click-star") {
-    console.log(JSON.stringify(request));
     var ref = database.ref("videos/" + request.videoLink)
-      ref.once("value").then(function(snapshot) {
-        if(snapshot.hasChild("rating")) {
-          var rating = parseFloat(snapshot.val().rating);
-          var count = parseInt(snapshot.val().count);
-          var newAverage = (rating * count + request.rating) / (count + 1);
-          database.ref("videos/" + request.videoLink).set({
-            rating: newAverage,
-            count: (count + 1)
-          });
-        } else {
-          database.ref("videos/" + request.videoLink).set({
-            rating: request.rating,
-            count: 1
-          });
-        }
+    ref.once("value").then(function(snapshot) {
+      if(snapshot.hasChild("rating")) {
+        var rating = parseFloat(snapshot.val().rating);
+        var count = parseInt(snapshot.val().count);
+        var newAverage = (rating * count + request.rating) / (count + 1);
+        database.ref("videos/" + request.videoLink).set({
+          rating: newAverage,
+          count: (count + 1)
+        });
+      } else {
+        database.ref("videos/" + request.videoLink).set({
+          rating: request.rating,
+          count: 1
+        });
+      }
     });
+  }
+});
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.type == "get-rating") {
+    var ref = database.ref("videos/" + request.videoLink);
+    ref.once("value").then(function(snapshot) {
+      if(shapshot.hasChild("rating")) {
+        sendResponse({rating: snapshot.val().rating});
+      } else {
+        sendResponse({rating: 0});
+      }
+    })
   }
 });
