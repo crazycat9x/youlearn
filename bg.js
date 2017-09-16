@@ -29,9 +29,10 @@ function urlCreator(input) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.type == "click-star") {
-    database.ref("users/" + "1").set({
-      videoId: request.videoLink,
-      rating: request.rating
+    database.ref("video/" + request.videoLink).puhs().set({
+      "gosar": {
+        rating: request.rating
+      }
     });
   }
 });
