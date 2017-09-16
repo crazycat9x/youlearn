@@ -6,15 +6,14 @@
   "version": "1.0",
   "background": {
     "persistent": false,
-    "page": "background.html"
+    "scripts": ["firebase.js", "bg.js"]
   },
   "browser_action": {
     "default_popup": "popup.html"
   },
   "permissions": [
     "activeTab",
-    "identity",
-    "background"
+    "identity"
   ],
   "content_scripts": [
     {
@@ -31,5 +30,5 @@
   "web_accessible_resources": [
     "style.css"
   ],
-  "content_security_policy": "script-src 'self' https://www.gstatic.com/firebasejs/4.3.1/firebase.js https://apis.google.com/js/platform.js; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
 }

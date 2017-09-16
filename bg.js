@@ -10,35 +10,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-// Create an instance of the Google provider object.
-var provider = new firebase.auth.GoogleAuthProvider();
-
-chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-  console.log("IN BG");
-  if(request.type == "googleAuth") {
-    signIn();
-  }
-});
-
-function signIn() { 
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // ...
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
-  });
-}
-
 // Get a reference to the database service
 var database = firebase.database();
 
@@ -58,10 +29,9 @@ function urlCreator(input) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.type == "click-star") {
-    database.ref("video/" + request.videoLink).puhs().set({
-      "gosar": {
-        rating: request.rating
-      }
+    database.ref("users/" + "1").set({
+      videoId: request.videoLink,
+      rating: request.rating
     });
   }
 });
