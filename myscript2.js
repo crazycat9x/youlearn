@@ -26,8 +26,7 @@ var rating = "\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
 
-  $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
-  
+ 
   $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
       $(this).append(rating)
   });
