@@ -89,6 +89,7 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
 }
 
 .select {
+  float: right;
   cursor: pointer;
   display: inline-block;
   position: relative;
