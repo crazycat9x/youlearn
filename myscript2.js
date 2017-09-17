@@ -128,6 +128,11 @@ $(document).ready(function() {
             var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0,pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
             element.find("li.scoreNum").append(dateCreated);
           });
+        var link = $(this).attr('href');
+        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
+            element.find("#overallStars").append("<span id='difficulty'>"+"<i class='fa fa-sliders' aria-hidden='true'></i>&nbsp;" +response.difficulty+"</span>")
+            console.log('st')
+        });
     });
 
     /* 1. Visualizing things on Hover - See next part for action on click */
@@ -257,12 +262,5 @@ Reference: http://jsfiddle.net/BB3JK/47/
     //   console.log(difficultyId);
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
       });
-    });
-
-    $("#content a.ytd-playlist-renderer").each(function(index) {
-        var link = $(this).attr('href');
-        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
-            console.log(response.difficulty);
-        });
     });
 });
