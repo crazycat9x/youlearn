@@ -204,17 +204,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       ref.once("value").then(function(snapshot) {
         if(snapshot.val() != null) {
           if(snapshot.val().difficulty >= 0 && snapshot.val().difficulty < 1.5) {
-            orderedUrlList.push({
-              url: e,
-              rating: snapshot.val().rating
-            });
+            orderedUrlList.push(e);
           }
         }
       });
     });
-    //console.log(orderedUrlList);
-    sendResponse(customSort(orderedUrlList));
-    //console.log(orderedUrlList);
+    console.log(orderedUrlList);
+    sendResponse(JSON.stringify(orderedUrlList));
   } else if(request.type == "get-intermediate") {
     var orderedUrlList = [];
     request.urls.forEach(function(e) {
@@ -222,17 +218,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       ref.once("value").then(function(snapshot) {
         if(snapshot.val() != null) {
           if(snapshot.val().difficulty >= 1.5 && snapshot.val().difficulty < 2.5) {
-            orderedUrlList.push({
-              url: e,
-              rating: snapshot.val().rating
-            });
+            orderedUrlList.push(e);
           }
         }
       });
     });
-    //console.log(orderedUrlList);
-    sendResponse(customSort(orderedUrlList));
-    //console.log(orderedUrlList);
+    sendResponse({data: orderedUrlList});
   } else if (request.type == "get-advanced") {
     var orderedUrlList = [];
     request.urls.forEach(function(e) {
@@ -240,36 +231,37 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       ref.once("value").then(function(snapshot) {
         if(snapshot.val() != null) {
           if(snapshot.val().difficulty >= 2.5 && snapshot.val().difficulty < 3) {
-            orderedUrlList.push({
-              url: e,
-              rating: snapshot.val().rating
-            });
+            orderedUrlList.push(e);
           }
         }
       });
     });
-    //console.log(orderedUrlList);
-    sendResponse(customSort(orderedUrlList));
-    //console.log(orderedUrlList);
+    sendResponse({data: orderedUrlList});
   }
+
+  return true;
 });
 
-function customSort(arr) {
-  var resultArr = [];
-  var temp = {};
-  for(var i = 0; i < arr.length; i++) {
-    for(var j = 1; j < arr.length - 1; j++) {
-      if(arr[j].rating < arr[j - 1].rating) {
-        temp = arr[j - 1];
-        arr[j - 1] = arr[j];
-        arr[j] = temp;
-      }
-    }
-  }
+// function customSort(arr) {
+//   var resultArr = [];
+//   var temp = {};
+//   console.log(arr);
+//   console.log(arr.length);
+//   for(var i = 0; i < arr.length; i++) {
+//     //console.log("Rating" + arr[i].rating);
+//     for(var j = 0; j < (arr.length - i - 1); j++) {
+//       if(arr[j].rating < arr[j + 1].rating) {
+//         temp = arr[j];
+//         arr[j] = arr[j + 1];
+//         arr[j + 1] = temp;
+//       }
+//     }
+//   }
+//   //console.log(arr);
+//   arr.forEach(function(e) {
+//     //console.log(e);
+//     resultArr.push(e.url);
+//   });
   
-  arr.forEach(function(e) {
-    resultArr.push(e.url);
-  });
-  
-  return resultArr;
-}
+//   return resultArr;
+// }

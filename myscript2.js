@@ -268,7 +268,7 @@ Reference: http://jsfiddle.net/BB3JK/47/
     });
     //console.log(urlList);
     chrome.runtime.sendMessage({type: 'get-basic', urls: urlList}, function(response) {
-      
+      console.log(response);
     });
   });
 });
