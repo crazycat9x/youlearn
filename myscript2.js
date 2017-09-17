@@ -17,7 +17,12 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
-</div>"
+</div>\
+<select>\
+<option value=\"useful\">Useful</option>\
+<option value=\"veryUseful\">Very Useful</option>\
+<option value=\"extremelyUseful\">Opel</option>\
+</select>"
 
 var ratingScore = "\
 <div class='rating-stars text-center'>\
@@ -39,12 +44,7 @@ var ratingScore = "\
   </li>\
 </ul>\
 Rating: <li class='scoreNum'></li>\
-</div>\
-<select>\
-<option value=\"useful\">Useful</option>\
-<option value=\"veryUseful\">Very Useful</option>\
-<option value=\"extremelyUseful\">Opel</option>\
-</select>"
+</div>"
 
 $(document).ready(function() {  
   
@@ -58,7 +58,12 @@ $(document).ready(function() {
       var link = $(this).attr('href');
       var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
-        element.find("li.scoreNum").html(response);
+        if(parseInt(response)) {
+          element.find("li.scoreNum").html(parseInt(response));
+        } else {
+          element.find("li.scoreNum").html(response);
+        }
+        
         var width = 80 * response / 5
         if(width) {
           var widthString = parseInt(width).toString() + "px";
