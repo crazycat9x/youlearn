@@ -1,13 +1,13 @@
 $(document).ready(function() { 
 var rating = "\
-</br><div class='rating-stars text-center'>\
+<div class='rating-stars text-center'>\
 <select name=\"flags\">\
 <option value=\"default\">(select tutorial difficulty)</option>\
 <option value=\"useful\">Basic</option>\
 <option value=\"veryUseful\">Intermediate</option>\
 <option value=\"extremelyUseful\">Advanced</option>\
 </select>\
-<span class=\'ratingLabel\'>Rating:</span> \<ul id='stars'>\
+<span class=\'ratingLabel\'>Rate this playlist: </span> \<ul id='stars'>\
   <li class='star' title='Poor' data-value='1'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
@@ -44,8 +44,8 @@ var ratingScore = "\
   <li class='star overall' title='WOW!!!' data-value='5'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
+  <li class='scoreNum'></li>/5\
 </ul>\
-<li class='scoreNum'></li>/5\
 </div>"
 
 $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
