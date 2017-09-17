@@ -1,3 +1,24 @@
+function convert_time(duration) {
+    var a = duration.match(/\d+/g)
+    var duration = 0
+
+    if(a.length == 3) {
+        duration = duration + parseInt(a[0]) * 3600;
+        duration = duration + parseInt(a[1]) * 60;
+        duration = duration + parseInt(a[2]);
+    }
+
+    if(a.length == 2) {
+        duration = duration + parseInt(a[0]) * 60;
+        duration = duration + parseInt(a[1]);
+    }
+
+    if(a.length == 1) {
+        duration = duration + parseInt(a[0]);
+    }
+    return duration
+}
+
 $(document).ready(function() {
     var rating = "\
 <div class='rating-stars text-center'>\
@@ -49,6 +70,10 @@ $(document).ready(function() {
 </ul>\
 </div>"
 
+    var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
+
+   
+
     $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
     $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer").each(function() {
         $(this).append(rating)
@@ -57,22 +82,52 @@ $(document).ready(function() {
     $("#content a.ytd-playlist-renderer").each(function(index) {
         var link = $(this).attr('href');
         var element = $(this);
+
+        // console.log(link);
+
         chrome.runtime.sendMessage({
             type: 'get-rating',
             videoLink: link
         }, function(response) {
             if (parseInt(response.rating) > 0) {
-                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + ")");
+                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " rated)&nbsp;&nbsp;&nbsp;&nbsp;");
             } else {
                 element.find("li.scoreNum").html(response.rating);
             }
             if (response) {
                 stars = element.find("ul#overallStars").children('li.star')
-                for (i = 0; i < parseInt(response); i++) {
+                for (i = 0; i < parseInt(response.rating); i++) {
                     $(stars[i]).addClass('selected');
                 }
             }
         });
+
+        var playlistId = link.substring(link.indexOf('&list=')+6);
+        // console.log(playlistId);
+        yt.getPlaylist(playlistId).then(Data => {
+            console.log(Data);
+
+            var dateCreated = Data.snippet.publishedAt;
+
+            var duration = 0;
+            var views = 0;
+            var videos = Data.videos;
+
+            for (var i = 0; i < videos.length; i++) {
+                var durationStr = videos[i].contentDetails.duration
+                duration += convert_time(durationStr);
+                views += parseInt(videos[i].statistics.viewCount);
+            }
+            element.find("li.scoreNum").append("<span id='views'>"+"<i class='fa fa-eye' aria-hidden='true'></i>&nbsp;" +views+"</span>");
+        });
+
+            // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
+            // element.find("li.scoreNum").append(dateCreated);
+        yt.getPlaylistInformation(playlistId).then(Data => {
+            pubDate = Data.snippet.publishedAt
+            var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0,pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
+            element.find("li.scoreNum").append(dateCreated);
+          });
     });
 
     /* 1. Visualizing things on Hover - See next part for action on click */
@@ -146,6 +201,7 @@ Reference: http://jsfiddle.net/BB3JK/47/
     });
 
     /* 2. Action to perform on click */
+<<<<<<< HEAD
     $('#stars li').on('click', function(){
       var onStar = parseInt($(this).data('value'), 10); // The star currently selected
       var stars = $(this).parent().children('li.star');
@@ -178,7 +234,58 @@ Reference: http://jsfiddle.net/BB3JK/47/
       //console.log(difficultyId);
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue, difficulty: difficultyId}, function(response) {
       });
+||||||| merged common ancestors
+    $('#stars li').on('click', function() {
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
+
+
+        chrome.runtime.sendMessage({
+            type: "click-star",
+            videoLink: videoId,
+            rating: ratingValue
+        }, function(response) {
+            console.log('worked')
+        });
+
+=======
+    $('#stars li').on('click', function() {
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
+
+        chrome.runtime.sendMessage({
+            type: "click-star",
+            videoLink: videoId,
+            rating: ratingValue
+        }, function(response) {
+        });
+>>>>>>> 08238337ed12d6d27479645dcf29389cb6d86205
     });
+<<<<<<< HEAD
     
   $("#container.ytd-search-sub-menu-renderer").append("<button>Basic</button>");
   $("#container.ytd-search-sub-menu-renderer").click(function() {
@@ -193,3 +300,12 @@ Reference: http://jsfiddle.net/BB3JK/47/
     });
   });
 });
+||||||| merged common ancestors
+
+});
+=======
+
+
+
+});
+>>>>>>> 08238337ed12d6d27479645dcf29389cb6d86205
