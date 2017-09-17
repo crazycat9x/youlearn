@@ -40,7 +40,8 @@ li.star.selected > i.fa {
 }
 
 .ratingLabel{
-  padding-top: 5px;
+  display: block !important;
+  text-align: right;
 }
 
 
@@ -89,6 +90,7 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
 }
 
 .select {
+  width: 165px !important;
   float: right;
   cursor: pointer;
   display: inline-block;
@@ -164,4 +166,7 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
 }
 #overallStars > li.scoreNum {
   font-size: 15px;
+}
+#stars{
+  padding: 5px 0px 5px 0px;
 }
