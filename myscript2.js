@@ -170,4 +170,13 @@ Reference: http://jsfiddle.net/BB3JK/47/
         }, function(response) {
         });
     });
+
+    var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
+    var playlistId = "PLoYCgNOIyGABj2GQSlDRjgvXtqfDxKm5b";
+
+    yt.getPlaylistInformation(playlistId).then(Data => {
+      console.log(Data);
+      console.log("1111111");
+    });
+
 });
