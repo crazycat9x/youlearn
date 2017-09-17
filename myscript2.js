@@ -1,13 +1,7 @@
 $(document).ready(function() { 
 var rating = "\
 <div class='rating-stars text-center'>\
-<select name=\"flags\">\
-<option value=\"default\">(select tutorial difficulty)</option>\
-<option value=\"useful\">Basic</option>\
-<option value=\"veryUseful\">Intermediate</option>\
-<option value=\"extremelyUseful\">Advanced</option>\
-</select>\
-<span class=\'ratingLabel\'>Rate this playlist: </span> \<ul id='stars'>\
+<span class=\'ratingLabel\'><span style=\'padding-top: 8px;\'>Rate this playlist: </span>\<ul id='stars'>\
   <li class='star' title='Poor' data-value='1'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
@@ -24,6 +18,13 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
+</span>\
+<select class=\"drop-down\" name=\"flags\">\
+<option value=\"default\">(select tutorial difficulty)</option>\
+<option value=\"useful\">Basic</option>\
+<option value=\"veryUseful\">Intermediate</option>\
+<option value=\"extremelyUseful\">Advanced</option>\
+</select>\
 </div>"
 
 var ratingScore = "\

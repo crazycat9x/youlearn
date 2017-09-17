@@ -38,18 +38,11 @@ li.star.hover > i.fa {
 li.star.selected > i.fa {
   color:#FF912C;
 }
-.rating-stars.text-center {
-  display: inline-flex;
-}
 
 .ratingLabel{
   padding-top: 5px;
 }
 
-ytd-section-list-renderer.ytd-two-column-search-results-renderer {
-  width: 70vw;
-  min-width: 0;
-}
 
 .red {
   background-color: #e74c3c;
@@ -74,4 +67,17 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
   transform: translate(0px, 5px);
   -webkit-transform: translate(0px, 5px);
   box-shadow: 0px 1px 0px 0px;
+}
+
+.ratingLabel {
+  display: flex;
+}
+
+select.drop-down {
+  float: right;
+}
+
+ytd-section-list-renderer.ytd-two-column-search-results-renderer {
+  width: 70vw;
+  min-width: 0;
 }
