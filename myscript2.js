@@ -188,9 +188,28 @@ Reference: http://jsfiddle.net/BB3JK/47/
         $listItems.click(function(e) {
             e.stopPropagation();
             $styledSelect.text($(this).text()).removeClass('active');
+            var videoId = $(this).parent().parent().parent().parent().find("a").attr('href');
             $this.val($(this).attr('rel'));
             $list.hide();
             //console.log($this.val());
+            var difficultyId = 0;
+            var switchVal = $(this).text();
+            console.log(switchVal);
+            switch(switchVal) {
+                case "Basic":
+                difficultyId = 1;
+                break;
+                case "Intermediate":
+                difficultyId = 2;
+                break;
+                case "Advanced":
+                difficultyId = 3;
+                break;
+                default:
+                difficultyId = 0;
+            }
+            chrome.runtime.sendMessage({type: "click-difficulty", videoLink: videoId, difficulty: difficultyId}, function(response) {
+            });
         });
 
         $(document).click(function() {
@@ -219,24 +238,24 @@ Reference: http://jsfiddle.net/BB3JK/47/
       // JUST RESPONSE (Not needed)
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
       var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
-      var difficultyId = 0;
-      var switchVal = $("#flags").val();
-      console.log(switchVal);
-      switch(switchVal) {
-        case "basic":
-          difficultyId = 1;
-          break;
-        case "intermediate":
-          difficultyId = 2;
-          break;
-        case "advanced":
-          difficultyId = 3;
-          break;
-        default:
-          difficultyId = 0;
-      }
-      console.log(difficultyId);
-      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue, difficulty: difficultyId}, function(response) {
+    //   var difficultyId = 0;
+    //   var switchVal = $("#flags").val();
+    //   console.log(switchVal);
+    //   switch(switchVal) {
+    //     case "basic":
+    //       difficultyId = 1;
+    //       break;
+    //     case "intermediate":
+    //       difficultyId = 2;
+    //       break;
+    //     case "advanced":
+    //       difficultyId = 3;
+    //       break;
+    //     default:
+    //       difficultyId = 0;
+    //   }
+    //   console.log(difficultyId);
+      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
       });
     });
     
