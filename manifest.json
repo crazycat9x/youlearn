@@ -28,7 +28,8 @@
     }
   ],
   "web_accessible_resources": [
-    "style.css"
+    "style.css",
+    "searchWithYouLearnLogo.png"
   ],
   "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
 }

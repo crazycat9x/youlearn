@@ -31,12 +31,12 @@ li.star > i.fa {
 
 /* Hover state of the stars */
 li.star.hover > i.fa {
-  color:#FFCC36;
+  color:#FFBCBC;
 }
 
 /* Selected state of the stars */
 li.star.selected > i.fa {
-  color:#FF912C;
+  color:#F60000;
 }
 
 .ratingLabel{
@@ -81,3 +81,4 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
   width: 70vw;
   min-width: 0;
 }
+img{max-width:100%;}
