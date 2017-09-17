@@ -1,3 +1,24 @@
+function convert_time(duration) {
+    var a = duration.match(/\d+/g)
+    var duration = 0
+
+    if(a.length == 3) {
+        duration = duration + parseInt(a[0]) * 3600;
+        duration = duration + parseInt(a[1]) * 60;
+        duration = duration + parseInt(a[2]);
+    }
+
+    if(a.length == 2) {
+        duration = duration + parseInt(a[0]) * 60;
+        duration = duration + parseInt(a[1]);
+    }
+
+    if(a.length == 1) {
+        duration = duration + parseInt(a[0]);
+    }
+    return duration
+}
+
 $(document).ready(function() {
     var rating = "\
 <div class='rating-stars text-center'>\
@@ -85,10 +106,23 @@ $(document).ready(function() {
 
         var playlistId = link.substring(link.indexOf('&list=')+6);
         // console.log(playlistId);
-        yt.getPlaylistInformation(playlistId).then(Data => {
-            // console.log(Data);
-            var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
-            element.find("li.scoreNum").append(dateCreated);
+        yt.getPlaylist(playlistId).then(Data => {
+            console.log(Data);
+
+            var dateCreated = Data.snippet.publishedAt;
+
+            var duration = 0;
+            var views = 0;
+            var videos = Data.videos;
+
+            for (var i = 0; i < videos.length; i++) {
+                var durationStr = videos[i].contentDetails.duration;
+                duration += convert_time(durationStr);
+                views += parseInt(videos[i].statistics.viewCount);
+            }
+
+            // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
+            // element.find("li.scoreNum").append(dateCreated);
   
           });
     });
