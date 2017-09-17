@@ -199,7 +199,10 @@ Reference: http://jsfiddle.net/BB3JK/47/
         });
 
     });
-
+    $('select').on('change', function(){
+        var option = $(this).val()
+        console.log(option)
+    })
     /* 2. Action to perform on click */
     $('#stars li').on('click', function(){
       var onStar = parseInt($(this).data('value'), 10); // The star currently selected
