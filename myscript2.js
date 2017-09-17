@@ -19,11 +19,11 @@ var rating = "\
   </li>\
 </ul>\
 </span>\
-<select class=\"drop-down\" name=\"flags\">\
+<select class=\"drop-down\" id=\"flags\" name=\"flags\">\
 <option value=\"default\">(select tutorial difficulty)</option>\
-<option value=\"useful\">Basic</option>\
-<option value=\"veryUseful\">Intermediate</option>\
-<option value=\"extremelyUseful\">Advanced</option>\
+<option value=\"basic\">Basic</option>\
+<option value=\"intermediate\">Intermediate</option>\
+<option value=\"advanced\">Advanced</option>\
 </select>\
 </div>"
 
@@ -158,12 +158,36 @@ $('select').each(function(){
       // JUST RESPONSE (Not needed)
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
       var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
-
-      
-      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
-          console.log('worked')
+      var difficultyId = 0;
+      var switchVal = $("#flags option:selected").val();
+      //console.log(switchVal);
+      switch(switchVal) {
+        case "basic":
+          difficultyId = 1;
+          break;
+        case "intermediate":
+          difficultyId = 2;
+          break;
+        case "advanced":
+          difficultyId = 3;
+          break;
+      }
+      //console.log(difficultyId);
+      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue, difficulty: difficultyId}, function(response) {
       });
       
     });
     
+  $("#container.ytd-search-sub-menu-renderer").append("<button>Basic</button>");
+  $("#container.ytd-search-sub-menu-renderer").click(function() {
+    var urlList = [];
+    $("#content a.ytd-playlist-renderer").each(function(index) {
+      var link = $(this).attr('href');
+      urlList.push(link);
+    });
+    //console.log(urlList);
+    chrome.runtime.sendMessage({type: 'get-basic', urls: urlList}, function(response) {
+      
+    });
   });
+});
