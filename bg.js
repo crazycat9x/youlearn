@@ -99,9 +99,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
       });
     });
-    console.log(orderedUrlList);
-    orderedUrlList = customSort(orderedUrlList);
-    console.log(orderedUrlList);
+    //console.log(orderedUrlList);
+    sendResponse(customSort(orderedUrlList));
+    //console.log(orderedUrlList);
   } else if(request.type == "get-intermediate") {
     var orderedUrlList = [];
     request.urls.forEach(function(e) {
@@ -117,6 +117,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
       });
     });
+    //console.log(orderedUrlList);
+    sendResponse(customSort(orderedUrlList));
+    //console.log(orderedUrlList);
   } else if (request.type == "get-advanced") {
     var orderedUrlList = [];
     request.urls.forEach(function(e) {
@@ -132,6 +135,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
       });
     });
+    //console.log(orderedUrlList);
+    sendResponse(customSort(orderedUrlList));
+    //console.log(orderedUrlList);
   }
 });
 

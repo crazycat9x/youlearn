@@ -19,11 +19,11 @@ var rating = "\
   </li>\
 </ul>\
 </span>\
-<select class=\"drop-down\" id=\"flags\" name=\"flags\">\
-<option value=\"default\">(select tutorial difficulty)</option>\
-<option value=\"basic\">Basic</option>\
-<option value=\"intermediate\">Intermediate</option>\
-<option value=\"advanced\">Advanced</option>\
+<select class=\"drop-down\" name=\"flags\">\
+<option value=\"hide\">Select level</option>\
+<option value=\"useful\">Basic</option>\
+<option value=\"veryUseful\">Intermediate</option>\
+<option value=\"extremelyUseful\">Advanced</option>\
 </select>\
 </div>"
 
@@ -45,7 +45,7 @@ var ratingScore = "\
   <li class='star overall' title='WOW!!!' data-value='5'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
-  <li class='scoreNum'></li>/5\
+  <li class='scoreNum'></li>\
 </ul>\
 </div>"
 
@@ -59,7 +59,7 @@ $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-rend
       var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
         if(parseInt(response)) {
-          element.find("li.scoreNum").html(parseInt(response));
+          element.find("li.scoreNum").html(parseInt(response) + "/5");
         } else {
           element.find("li.scoreNum").html(response);
         }
