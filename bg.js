@@ -197,71 +197,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if(request.type == "get-basic") {
-    var orderedUrlList = [];
-    request.urls.forEach(function(e) {
-      var ref = database.ref("videos/" + e);
-      ref.once("value").then(function(snapshot) {
-        if(snapshot.val() != null) {
-          if(snapshot.val().difficulty >= 0 && snapshot.val().difficulty < 1.5) {
-            orderedUrlList.push(e);
-          }
-        }
-      });
+  if(request.type == "get-difficulty") {
+    var ref = database.ref("videos/" + request.videoLink);
+    ref.once("value").then(function(snapshot) {
+      if(snapshot.hasChild("difficulty") && snapshot.val().difficulty != 0) {
+        sendResponse({
+          difficulty: snapshot.val().difficulty,
+          diffCount: snapshot.val().diffCount
+        })
+      } else {
+        sendResponse({
+          difficulty: "(Not enough data)",
+          diffCount: 0
+        })
+      }
     });
-    console.log(orderedUrlList);
-    sendResponse(JSON.stringify(orderedUrlList));
-  } else if(request.type == "get-intermediate") {
-    var orderedUrlList = [];
-    request.urls.forEach(function(e) {
-      var ref = database.ref("videos/" + e);
-      ref.once("value").then(function(snapshot) {
-        if(snapshot.val() != null) {
-          if(snapshot.val().difficulty >= 1.5 && snapshot.val().difficulty < 2.5) {
-            orderedUrlList.push(e);
-          }
-        }
-      });
-    });
-    sendResponse({data: orderedUrlList});
-  } else if (request.type == "get-advanced") {
-    var orderedUrlList = [];
-    request.urls.forEach(function(e) {
-      var ref = database.ref("videos/" + e);
-      ref.once("value").then(function(snapshot) {
-        if(snapshot.val() != null) {
-          if(snapshot.val().difficulty >= 2.5 && snapshot.val().difficulty < 3) {
-            orderedUrlList.push(e);
-          }
-        }
-      });
-    });
-    sendResponse({data: orderedUrlList});
   }
-
   return true;
 });
-
-// function customSort(arr) {
-//   var resultArr = [];
-//   var temp = {};
-//   console.log(arr);
-//   console.log(arr.length);
-//   for(var i = 0; i < arr.length; i++) {
-//     //console.log("Rating" + arr[i].rating);
-//     for(var j = 0; j < (arr.length - i - 1); j++) {
-//       if(arr[j].rating < arr[j + 1].rating) {
-//         temp = arr[j];
-//         arr[j] = arr[j + 1];
-//         arr[j + 1] = temp;
-//       }
-//     }
-//   }
-//   //console.log(arr);
-//   arr.forEach(function(e) {
-//     //console.log(e);
-//     resultArr.push(e.url);
-//   });
-  
-//   return resultArr;
-// }

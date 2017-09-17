@@ -258,17 +258,11 @@ Reference: http://jsfiddle.net/BB3JK/47/
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
       });
     });
-    
-  $("#container.ytd-search-sub-menu-renderer").append("<button>Basic</button>");
-  $("#container.ytd-search-sub-menu-renderer").click(function() {
-    var urlList = [];
+
     $("#content a.ytd-playlist-renderer").each(function(index) {
-      var link = $(this).attr('href');
-      urlList.push(link);
+        var link = $(this).attr('href');
+        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
+            console.log(response.difficulty);
+        });
     });
-    //console.log(urlList);
-    chrome.runtime.sendMessage({type: 'get-basic', urls: urlList}, function(response) {
-      console.log(response);
-    });
-  });
 });
