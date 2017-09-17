@@ -45,7 +45,7 @@ var ratingScore = "\
   <li class='star overall' title='WOW!!!' data-value='5'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
-  <li class='scoreNum'></li>/5\
+  <li class='scoreNum'></li>\
 </ul>\
 </div>"
 
