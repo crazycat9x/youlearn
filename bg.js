@@ -53,10 +53,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.type == "get-rating") {
     var ref = database.ref("videos/" + request.videoLink);
     ref.once("value").then(function(snapshot) {
-      if(shapshot.hasChild("rating")) {
-        sendResponse({rating: snapshot.val().rating});
+      if(snapshot.hasChild("rating")) {
+        console.log("In rating");
+        sendResponse(snapshot.val().rating);
       } else {
-        sendResponse({rating: 0});
+        console.log("No rating")
+        sendResponse(0);
       }
     })
   }

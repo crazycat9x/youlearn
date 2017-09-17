@@ -46,6 +46,13 @@ $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
 //console.log(rating)
 $(document).ready(function(){
     
+    $("#content a.ytd-playlist-renderer").each(function(index) {
+      var link = $(this).attr('href');   
+      chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
+        console.log(response);
+      });
+    });
+  
     /* 1. Visualizing things on Hover - See next part for action on click */
     $('#stars li').on('mouseover', function(){
       var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
