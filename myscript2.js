@@ -70,8 +70,6 @@ $(document).ready(function() {
 </ul>\
 </div>"
 
-
-
     var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
 
    
@@ -92,7 +90,7 @@ $(document).ready(function() {
             videoLink: link
         }, function(response) {
             if (parseInt(response.rating) > 0) {
-                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " people rated)");
+                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " rated) ");
             } else {
                 element.find("li.scoreNum").html(response.rating);
             }
@@ -123,7 +121,10 @@ $(document).ready(function() {
 
             // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
             // element.find("li.scoreNum").append(dateCreated);
-  
+        yt.getPlaylistInformation(playlistId).then(Data => {
+            pubDate = Data.snippet.publishedAt
+            var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i> " + pubDate.slice(0,pubDate.indexOf("T")) + "</span>";
+            element.find("li.scoreNum").append(dateCreated);
           });
     });
 
