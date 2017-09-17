@@ -34,42 +34,144 @@ function urlCreator(input) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.type == "click-star") {
-    console.log(request.difficulty);
+    //console.log(request.difficulty);
     var ref = database.ref("videos/" + request.videoLink);
     ref.once("value").then(function(snapshot) {
       if(snapshot.hasChild("rating")) {
-        var rating = parseFloat(snapshot.val().rating);
-        var count = parseInt(snapshot.val().count);
-        var newAverage = (rating * count + request.rating) / (count + 1);
-        
-        var difficulty = parseFloat(snapshot.val().difficulty);
-        var diffCount = snapshot.val().diffCount;
-        
-        if(request.difficulty != 0) {
-          difficulty = (difficulty * count + request.difficulty) / (diffCount + 1);
+        if(snapshot.hasChild("difficulty")) {
+          var rating = parseFloat(snapshot.val().rating);
+          var count = parseInt(snapshot.val().count);
+          var newAverage = (rating * count + request.rating) / (count + 1);
+
+          var diffCount = snapshot.val().diffCount;
+          var difficulty = snapshot.val().difficulty;
+
+          database.ref("videos/" + request.videoLink).set({
+            rating: newAverage,
+            count: (count + 1),
+            diffCount: diffCount,
+            difficulty: difficulty
+          });
+        } else {
+          var rating = parseFloat(snapshot.val().rating);
+          var count = parseInt(snapshot.val().count);
+          var newAverage = (rating * count + request.rating) / (count + 1);
+
+          var diffCount = 0;
+          var difficulty = 0;
+
+          database.ref("videos/" + request.videoLink).set({
+            rating: newAverage,
+            count: (count + 1),
+            diffCount: diffCount,
+            difficulty: difficulty
+          });
         }
         
-        database.ref("videos/" + request.videoLink).set({
-          rating: newAverage,
-          count: (count + 1),
-          difficulty: difficulty,
-          diffCount: (diffCount + 1)
-        });
       } else {
-        var difficulty = 0;
-        var diffCount = 0;
-        if(request.difficulty != 0) {
-          difficulty = request.difficulty;
-          diffCount = 1;
+        if(snapshot.hasChild("difficulty")) {
+          var rating = request.rating;
+          var count = 1;
+
+          var diffCount = snapshot.val().diffCount;
+          var difficulty = snapshot.val().difficulty;
+
+          database.ref("videos/" + request.videoLink).set({
+            rating: rating,
+            count: count,
+            diffCount: diffCount,
+            difficulty: difficulty
+          });
+        } else {
+          var rating = request.rating;
+          var count = 1;
+
+          var diffCount = 0;
+          var difficulty = 0;
+
+          database.ref("videos/" + request.videoLink).set({
+            rating: rating,
+            count: count,
+            diffCount: diffCount,
+            difficulty: difficulty
+          });
         }
-        
-        database.ref("videos/" + request.videoLink).set({
-          rating: request.rating,
-          count: 1,
-          difficulty: difficulty,
-          diffCount: diffCount
-        });
       }
+    });
+  }
+});
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.type == "click-difficulty") {
+    console.log(request.difficulty);
+    var ref = database.ref("videos/" + request.videoLink);
+    ref.once("value").then(function(snapshot) {
+      if(snapshot.hasChild("difficulty")) {
+          if(snapshot.hasChild("rating")) {
+            var difficulty = parseFloat(snapshot.val().difficulty);
+            var diffCount = snapshot.val().diffCount;
+          
+            var rating = snapshot.val().rating;
+            var count = snapshot.val().count;
+
+            if(request.difficulty != 0) {
+              difficulty = (difficulty * diffCount + request.difficulty) / (diffCount + 1);
+            }
+            
+            database.ref("videos/" + request.videoLink).set({
+              rating: rating,
+              count: count,
+              difficulty: difficulty,
+              diffCount: (diffCount + 1)
+            });
+          } else {
+            var difficulty = parseFloat(snapshot.val().difficulty);
+            var diffCount = snapshot.val().diffCount;
+
+            if(request.difficulty != 0) {
+              difficulty = (difficulty * diffCount + request.difficulty) / (diffCount + 1);
+            }
+            
+            database.ref("videos/" + request.videoLink).set({
+              rating: 0,
+              count: 0,
+              difficulty: difficulty,
+              diffCount: diffCount
+            });
+          }
+        } else {
+          if(snapshot.hasChild("rating")) {
+            var rating = snapshot.val().rating;
+            var count = snapshot.val().count;
+
+            var difficulty = request.difficulty;
+            var diffCount = 1;
+
+            if(difficulty != 0) {
+              database.ref("videos/" + request.videoLink).set({
+                rating: rating,
+                count: count,
+                difficulty: difficulty,
+                diffCount: diffCount
+              });
+            }
+          } else {
+            var rating = 0;
+            var count = 0;
+
+            var difficulty = request.difficulty;
+            var diffCount = 1;
+
+            if(difficulty != 0) {
+              database.ref("videos/" + request.videoLink).set({
+                rating: rating,
+                count: count,
+                difficulty: difficulty,
+                diffCount: diffCount
+              });
+            }
+          }
+        }
     });
   }
 });
