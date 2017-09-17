@@ -68,7 +68,7 @@ $(document).ready(function() {
             }
             if (response) {
                 stars = element.find("ul#overallStars").children('li.star')
-                for (i = 0; i < parseInt(response); i++) {
+                for (i = 0; i < parseInt(response.rating); i++) {
                     $(stars[i]).addClass('selected');
                 }
             }
@@ -168,7 +168,6 @@ Reference: http://jsfiddle.net/BB3JK/47/
             videoLink: videoId,
             rating: ratingValue
         }, function(response) {
-            console.log('worked')
         });
 
     });
