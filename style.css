@@ -32,3 +32,8 @@
 .ratingLabel{
   padding-top: 5px;
 }
+
+ytd-section-list-renderer.ytd-two-column-search-results-renderer {
+  width: 70vw;
+  min-width: 0;
+}

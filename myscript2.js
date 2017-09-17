@@ -1,3 +1,4 @@
+$(document).ready(function(){
 var rating = "\
 </br><div class='rating-stars text-center'>\
 <span class=\'ratingLabel\'>Rating:</span> \<ul id='stars'>\
@@ -23,9 +24,11 @@ var rating = "\
 <option value=\"veryUseful\">Very Useful</option>\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
-$(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
+$("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
+    $(this).append(rating)
+})
 console.log(rating)
-$(document).ready(function(){
+
     
     /* 1. Visualizing things on Hover - See next part for action on click */
     $('#stars li').on('mouseover', function(){
