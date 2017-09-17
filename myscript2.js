@@ -62,7 +62,7 @@ $(document).ready(function() {
             videoLink: link
         }, function(response) {
             if (parseInt(response.rating) > 0) {
-                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + ")");
+                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " people rated)");
             } else {
                 element.find("li.scoreNum").html(response.rating);
             }
@@ -169,7 +169,5 @@ Reference: http://jsfiddle.net/BB3JK/47/
             rating: ratingValue
         }, function(response) {
         });
-
     });
-
 });
