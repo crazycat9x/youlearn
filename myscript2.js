@@ -19,12 +19,33 @@ var rating = "\
   </li>\
 </ul>\
 </div>\
-<li class=\'scoreNum\'>\</li>\
 <select>\
 <option value=\"useful\">Useful</option>\
 <option value=\"veryUseful\">Very Useful</option>\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
+
+var ratingScore = "\
+<div class='rating-stars text-center'>\
+<ul id='overallStars'>\
+  <li class='star overall' title='Poor' data-value='1'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Fair' data-value='2'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Good' data-value='3'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Excellent' data-value='4'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='WOW!!!' data-value='5'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+</ul>\
+Rating: <li class='scoreNum'></li>\
+</div>"
 
  
   $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
@@ -40,7 +61,10 @@ var rating = "\
         } else {
           element.find("li.scoreNum").html(response);
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> da7d111dcdf1eb3e97acb846f74dbb910f5de219
         var width = 80 * response / 5
         if(width) {
           var widthString = parseInt(width).toString() + "px";
