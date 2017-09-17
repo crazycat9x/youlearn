@@ -1,3 +1,4 @@
+$(document).ready(function() { 
 var rating = "\
 </br><div class='rating-stars text-center'>\
 <span class=\'ratingLabel\'>Rating:</span> \<ul id='stars'>\
@@ -17,37 +18,14 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
-</div>"
-
-var ratingScore = "\
-<div class='rating-stars text-center'>\
-<ul id='overallStars'>\
-  <li class='star overall' title='Poor' data-value='1'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Fair' data-value='2'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Good' data-value='3'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Excellent' data-value='4'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='WOW!!!' data-value='5'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-</ul>\
-Rating: <li class='scoreNum'></li>\
 </div>\
+<span class=\'scoreNum\'>\</span>\
 <select>\
 <option value=\"useful\">Useful</option>\
 <option value=\"veryUseful\">Very Useful</option>\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
 
-$(document).ready(function() {  
-  
   $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
   
   $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
@@ -58,7 +36,7 @@ $(document).ready(function() {
       var link = $(this).attr('href');
       var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
-        element.find("li.scoreNum").html(response);
+        element.find("span.scoreNum").html(response);
         var width = 80 * response / 5
         if(width) {
           var widthString = parseInt(width).toString() + "px";
