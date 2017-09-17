@@ -11,7 +11,7 @@ $("#learn-search").css({
 
 $("#learn-search").click(function() {
   chrome.runtime.sendMessage({
-    clicked: "yes", 
+    type: "search", 
     searchTerm: $("#search-input #search").val()
   }, function(response) {
   });

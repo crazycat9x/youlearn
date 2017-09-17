@@ -18,6 +18,7 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
+<<<<<<< HEAD
 </div>\
 <select>\
 <option value=\"useful\">Useful</option>\
@@ -29,7 +30,44 @@ $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" )
 })
 console.log(rating)
 
+=======
+</div>"
+
+var ratingScore = "\
+<div class='rating-stars text-center'>\
+<ul id='overallStars'>\
+  <li class='star overall' title='Poor' data-value='1'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Fair' data-value='2'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Good' data-value='3'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Excellent' data-value='4'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='WOW!!!' data-value='5'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='scoreNum'>3.5</li>\
+</ul>\
+</div>"
+$(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer")
+$(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
+
+//console.log(rating)
+$(document).ready(function(){
+>>>>>>> 87a79532d1bde94151bc8ea24e8438da43766b66
     
+    $("#content a.ytd-playlist-renderer").each(function(index) {
+      var link = $(this).attr('href');   
+      chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
+        console.log(response);
+      });
+    });
+  
     /* 1. Visualizing things on Hover - See next part for action on click */
     $('#stars li').on('mouseover', function(){
       var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
@@ -66,8 +104,13 @@ console.log(rating)
       
       // JUST RESPONSE (Not needed)
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-      console.log(ratingValue)
+      //console.log(ratingValue)
+      var videoId = $('#stars li.selected').last().parent().parent().parent().find("a").attr('href');
+      //console.log(videoId);
+      
+      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
+      });
+      
     });
-    
     
   });
