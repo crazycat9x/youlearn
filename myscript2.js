@@ -19,12 +19,40 @@ var rating = "\
   </li>\
 </ul>\
 </div>\
+<<<<<<< HEAD
 <span class=\'scoreNum\'>\</span>\
+=======
+>>>>>>> 1d46bf2d5168dc4c0e8aa3e61fe12a1d9cf493a5
 <select>\
 <option value=\"useful\">Useful</option>\
 <option value=\"veryUseful\">Very Useful</option>\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
+<<<<<<< HEAD
+=======
+
+var ratingScore = "\
+<div class='rating-stars text-center'>\
+<ul id='overallStars'>\
+  <li class='star overall' title='Poor' data-value='1'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Fair' data-value='2'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Good' data-value='3'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='Excellent' data-value='4'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+  <li class='star overall' title='WOW!!!' data-value='5'>\
+    <i class='fa fa-star fa-fw'></i>\
+  </li>\
+</ul>\
+Rating: <li class='scoreNum'></li>\
+</div>"
+>>>>>>> 1d46bf2d5168dc4c0e8aa3e61fe12a1d9cf493a5
 
  
   $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
@@ -35,7 +63,16 @@ var rating = "\
       var link = $(this).attr('href');
       var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
+<<<<<<< HEAD
         element.find("span.scoreNum").html(response);
+=======
+        if(parseInt(response)) {
+          element.find("li.scoreNum").html(parseInt(response));
+        } else {
+          element.find("li.scoreNum").html(response);
+        }
+        
+>>>>>>> 1d46bf2d5168dc4c0e8aa3e61fe12a1d9cf493a5
         var width = 80 * response / 5
         if(width) {
           var widthString = parseInt(width).toString() + "px";
