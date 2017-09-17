@@ -83,7 +83,22 @@ $(document).ready(function() {
         var link = $(this).attr('href');
         var element = $(this);
 
-        // console.log(link);
+        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
+            if (typeof response.difficulty != 'string'){
+                var difficultyNum = response.difficulty
+                var difiicultyStr = ""
+                console.log(difficultyNum)
+                if (difficultyNum<1.5){
+                    difiicultyStr = "basic"
+                } else if (1.5<=difficultyNum<2) {
+                    difiicultyStr = "intermidiate"
+                } else if (2<=difficultyNum<=3) {
+                    difiicultyStr = "advance"
+                }
+                
+                element.find("li.scoreNum").append("&nbsp;&nbsp;&nbsp;&nbsp;<span id='difficulty'>&nbsp;"+"<i class='fa fa-sliders' aria-hidden='true'></i>&nbsp;" +difiicultyStr+"</span>&nbsp;&nbsp;&nbsp;&nbsp;")
+            }
+        });
 
         chrome.runtime.sendMessage({
             type: 'get-rating',
@@ -128,11 +143,7 @@ $(document).ready(function() {
             var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0,pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
             element.find("li.scoreNum").append(dateCreated);
           });
-        var link = $(this).attr('href');
-        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
-            element.find("#overallStars").append("<span id='difficulty'>"+"<i class='fa fa-sliders' aria-hidden='true'></i>&nbsp;" +response.difficulty+"</span>")
-            console.log('st')
-        });
+        
     });
 
     /* 1. Visualizing things on Hover - See next part for action on click */
