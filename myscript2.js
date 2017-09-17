@@ -40,11 +40,11 @@ $(document).ready(function() {
   </li>\
 </ul>\
 </span>\
-<select class=\"drop-down\" name=\"flags\">\
-<option value=\"hide\">Select level</option>\
-<option value=\"useful\">Basic</option>\
-<option value=\"veryUseful\">Intermediate</option>\
-<option value=\"extremelyUseful\">Advanced</option>\
+<select class=\"drop-down\" id=\"flags\" name=\"flags\">\
+<option value=\"default\">Select level</option>\
+<option value=\"basic\">Basic</option>\
+<option value=\"intermediate\">Intermediate</option>\
+<option value=\"advanced\">Advanced</option>\
 </select>\
 </div>"
 
@@ -105,7 +105,7 @@ $(document).ready(function() {
         var playlistId = link.substring(link.indexOf('&list=')+6);
         // console.log(playlistId);
         yt.getPlaylist(playlistId).then(Data => {
-            console.log(Data);
+            //console.log(Data);
 
             var dateCreated = Data.snippet.publishedAt;
 
@@ -201,7 +201,6 @@ Reference: http://jsfiddle.net/BB3JK/47/
     });
 
     /* 2. Action to perform on click */
-<<<<<<< HEAD
     $('#stars li').on('click', function(){
       var onStar = parseInt($(this).data('value'), 10); // The star currently selected
       var stars = $(this).parent().children('li.star');
@@ -218,8 +217,8 @@ Reference: http://jsfiddle.net/BB3JK/47/
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
       var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
       var difficultyId = 0;
-      var switchVal = $("#flags option:selected").val();
-      //console.log(switchVal);
+      var switchVal = $("#flags").val();
+      console.log(switchVal);
       switch(switchVal) {
         case "basic":
           difficultyId = 1;
@@ -230,62 +229,13 @@ Reference: http://jsfiddle.net/BB3JK/47/
         case "advanced":
           difficultyId = 3;
           break;
+        default:
+          difficultyId = 0;
       }
-      //console.log(difficultyId);
+      console.log(difficultyId);
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue, difficulty: difficultyId}, function(response) {
       });
-||||||| merged common ancestors
-    $('#stars li').on('click', function() {
-        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
-        var stars = $(this).parent().children('li.star');
-
-        for (i = 0; i < stars.length; i++) {
-            $(stars[i]).removeClass('selected');
-        }
-
-        for (i = 0; i < onStar; i++) {
-            $(stars[i]).addClass('selected');
-        }
-
-        // JUST RESPONSE (Not needed)
-        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-        var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
-
-
-        chrome.runtime.sendMessage({
-            type: "click-star",
-            videoLink: videoId,
-            rating: ratingValue
-        }, function(response) {
-            console.log('worked')
-        });
-
-=======
-    $('#stars li').on('click', function() {
-        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
-        var stars = $(this).parent().children('li.star');
-
-        for (i = 0; i < stars.length; i++) {
-            $(stars[i]).removeClass('selected');
-        }
-
-        for (i = 0; i < onStar; i++) {
-            $(stars[i]).addClass('selected');
-        }
-
-        // JUST RESPONSE (Not needed)
-        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-        var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
-
-        chrome.runtime.sendMessage({
-            type: "click-star",
-            videoLink: videoId,
-            rating: ratingValue
-        }, function(response) {
-        });
->>>>>>> 08238337ed12d6d27479645dcf29389cb6d86205
     });
-<<<<<<< HEAD
     
   $("#container.ytd-search-sub-menu-renderer").append("<button>Basic</button>");
   $("#container.ytd-search-sub-menu-renderer").click(function() {
@@ -300,12 +250,3 @@ Reference: http://jsfiddle.net/BB3JK/47/
     });
   });
 });
-||||||| merged common ancestors
-
-});
-=======
-
-
-
-});
->>>>>>> 08238337ed12d6d27479645dcf29389cb6d86205
