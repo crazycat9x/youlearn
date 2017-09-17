@@ -61,10 +61,6 @@ Rating: <li class='scoreNum'></li>\
         } else {
           element.find("li.scoreNum").html(response);
         }
-<<<<<<< HEAD
-        
-=======
->>>>>>> da7d111dcdf1eb3e97acb846f74dbb910f5de219
         var width = 80 * response / 5
         if(width) {
           var widthString = parseInt(width).toString() + "px";
