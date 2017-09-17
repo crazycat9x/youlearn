@@ -190,7 +190,7 @@ Reference: http://jsfiddle.net/BB3JK/47/
             $styledSelect.text($(this).text()).removeClass('active');
             $this.val($(this).attr('rel'));
             $list.hide();
-            //console.log($this.val());
+            console.log($this);
         });
 
         $(document).click(function() {
