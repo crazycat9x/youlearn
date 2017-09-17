@@ -1,4 +1,3 @@
-$(document).ready(function(){
 var rating = "\
 </br><div class='rating-stars text-center'>\
 <span class=\'ratingLabel\'>Rating:</span> \<ul id='stars'>\
@@ -18,7 +17,6 @@ var rating = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
-<<<<<<< HEAD
 </div>"
 
 var ratingScore = "\
@@ -41,47 +39,21 @@ var ratingScore = "\
   </li>\
 </ul>\
 Rating: <li class='scoreNum'></li>\
-</div>"
-$(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer")
-$(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
-||||||| merged common ancestors
-</div>"
-
-var ratingScore = "\
-<div class='rating-stars text-center'>\
-<ul id='overallStars'>\
-  <li class='star overall' title='Poor' data-value='1'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Fair' data-value='2'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Good' data-value='3'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='Excellent' data-value='4'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='star overall' title='WOW!!!' data-value='5'>\
-    <i class='fa fa-star fa-fw'></i>\
-  </li>\
-  <li class='scoreNum'>3.5</li>\
-</ul>\
-</div>"
-$(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer")
-$(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
-=======
 </div>\
 <select>\
 <option value=\"useful\">Useful</option>\
 <option value=\"veryUseful\">Very Useful</option>\
 <option value=\"extremelyUseful\">Opel</option>\
 </select>"
-$("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
-    $(this).append(rating)
-});
 
 $(document).ready(function() {  
+  
+  $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
+  
+  $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer" ).each(function(){
+      $(this).append(rating)
+  });
+  
     $("#content a.ytd-playlist-renderer").each(function(index) {
       var link = $(this).attr('href');
       var element = $(this);
