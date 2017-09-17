@@ -37,8 +37,8 @@ var ratingScore = "\
   <li class='star overall' title='WOW!!!' data-value='5'>\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
-  <li class='scoreNum'>3.5</li>\
 </ul>\
+Rating: <li class='scoreNum'></li>\
 </div>"
 $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer")
 $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
@@ -47,9 +47,16 @@ $(rating).appendTo("div#content.style-scope.ytd-playlist-renderer")
 $(document).ready(function(){
     
     $("#content a.ytd-playlist-renderer").each(function(index) {
-      var link = $(this).attr('href');   
+      var link = $(this).attr('href');
+      var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
-        console.log(response);
+        element.find("li.scoreNum").html(response);
+        var width = 80 * response / 5
+        if(width) {
+          var widthString = parseInt(width).toString() + "px";
+          console.log(widthString);
+          element.find("ul#overallStars").css({"width": widthString, "height": "16px", "overflow": "hidden"});
+        }
       });
     });
   

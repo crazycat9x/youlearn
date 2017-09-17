@@ -54,12 +54,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     var ref = database.ref("videos/" + request.videoLink);
     ref.once("value").then(function(snapshot) {
       if(snapshot.hasChild("rating")) {
-        console.log("In rating");
         sendResponse(snapshot.val().rating);
       } else {
-        console.log("No rating")
-        sendResponse(0);
+        sendResponse("(Not rated yet)");
       }
     })
   }
+  return true;
 });
