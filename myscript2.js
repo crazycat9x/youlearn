@@ -90,7 +90,7 @@ $(document).ready(function() {
             videoLink: link
         }, function(response) {
             if (parseInt(response.rating) > 0) {
-                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " rated) ");
+                element.find("li.scoreNum").html(parseInt(response.rating) + "/5" + " (" + response.count + " rated)&nbsp;&nbsp;&nbsp;&nbsp;");
             } else {
                 element.find("li.scoreNum").html(response.rating);
             }
@@ -114,16 +114,18 @@ $(document).ready(function() {
             var videos = Data.videos;
 
             for (var i = 0; i < videos.length; i++) {
-                var durationStr = videos[i].contentDetails.duration;
+                var durationStr = videos[i].contentDetails.duration
                 duration += convert_time(durationStr);
                 views += parseInt(videos[i].statistics.viewCount);
             }
+            element.find("li.scoreNum").append("<span id='views'>"+"<i class='fa fa-eye' aria-hidden='true'></i>&nbsp;" +views+"</span>");
+        });
 
             // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
             // element.find("li.scoreNum").append(dateCreated);
         yt.getPlaylistInformation(playlistId).then(Data => {
             pubDate = Data.snippet.publishedAt
-            var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i> " + pubDate.slice(0,pubDate.indexOf("T")) + "</span>";
+            var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0,pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
             element.find("li.scoreNum").append(dateCreated);
           });
     });
