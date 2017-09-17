@@ -108,11 +108,11 @@ $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-rend
       
       // JUST RESPONSE (Not needed)
       var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-      //console.log(ratingValue)
-      var videoId = $('#stars li.selected').last().parent().parent().parent().find("a").attr('href');
-      //console.log(videoId);
+      var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
+
       
       chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
+          console.log('worked')
       });
       
     });
