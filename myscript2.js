@@ -2,18 +2,18 @@ function convert_time(duration) {
     var a = duration.match(/\d+/g)
     var duration = 0
 
-    if(a.length == 3) {
+    if (a.length == 3) {
         duration = duration + parseInt(a[0]) * 3600;
         duration = duration + parseInt(a[1]) * 60;
         duration = duration + parseInt(a[2]);
     }
 
-    if(a.length == 2) {
+    if (a.length == 2) {
         duration = duration + parseInt(a[0]) * 60;
         duration = duration + parseInt(a[1]);
     }
 
-    if(a.length == 1) {
+    if (a.length == 1) {
         duration = duration + parseInt(a[0]);
     }
     return duration
@@ -72,7 +72,7 @@ $(document).ready(function() {
 
     var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
 
-   
+
 
     $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
     $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer").each(function() {
@@ -83,20 +83,23 @@ $(document).ready(function() {
         var link = $(this).attr('href');
         var element = $(this);
 
-        chrome.runtime.sendMessage({type: 'get-difficulty', videoLink: link}, function(response) {
-            if (typeof response.difficulty != 'string'){
+        chrome.runtime.sendMessage({
+            type: 'get-difficulty',
+            videoLink: link
+        }, function(response) {
+            if (typeof response.difficulty != 'string') {
                 var difficultyNum = response.difficulty
                 var difiicultyStr = ""
                 console.log(difficultyNum)
-                if (difficultyNum<1.5){
+                if (difficultyNum < 1.5) {
                     difiicultyStr = "basic"
-                } else if (1.5<=difficultyNum<2) {
+                } else if (1.5 <= difficultyNum < 2) {
                     difiicultyStr = "intermidiate"
-                } else if (2<=difficultyNum<=3) {
+                } else if (2 <= difficultyNum <= 3) {
                     difiicultyStr = "advance"
                 }
-                
-                element.find("li.scoreNum").append("&nbsp;&nbsp;&nbsp;&nbsp;<span id='difficulty'>&nbsp;"+"<i class='fa fa-sliders' aria-hidden='true'></i>&nbsp;" +difiicultyStr+"</span>&nbsp;&nbsp;&nbsp;&nbsp;")
+
+                element.find("li.scoreNum").append("&nbsp;&nbsp;&nbsp;&nbsp;<span id='difficulty'>&nbsp;" + "<i class='fa fa-sliders' aria-hidden='true'></i>&nbsp;" + difiicultyStr + "</span>&nbsp;&nbsp;&nbsp;&nbsp;")
             }
         });
 
@@ -117,7 +120,7 @@ $(document).ready(function() {
             }
         });
 
-        var playlistId = link.substring(link.indexOf('&list=')+6);
+        var playlistId = link.substring(link.indexOf('&list=') + 6);
         // console.log(playlistId);
         yt.getPlaylist(playlistId).then(Data => {
             //console.log(Data);
@@ -133,17 +136,17 @@ $(document).ready(function() {
                 duration += convert_time(durationStr);
                 views += parseInt(videos[i].statistics.viewCount);
             }
-            element.find("li.scoreNum").append("<span id='views'>"+"<i class='fa fa-eye' aria-hidden='true'></i>&nbsp;" +views+"</span>");
+            element.find("li.scoreNum").append("<span id='views'>" + "<i class='fa fa-eye' aria-hidden='true'></i>&nbsp;" + views + "</span>");
         });
 
-            // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
-            // element.find("li.scoreNum").append(dateCreated);
+        // var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
+        // element.find("li.scoreNum").append(dateCreated);
         yt.getPlaylistInformation(playlistId).then(Data => {
             pubDate = Data.snippet.publishedAt
-            var dateCreated = "<span class='dateCreated'> "+"<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0,pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
+            var dateCreated = "<span class='dateCreated'> " + "<i class='fa fa-calendar' aria-hidden='true'></i>&nbsp;" + pubDate.slice(0, pubDate.indexOf("T")) + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
             element.find("li.scoreNum").append(dateCreated);
-          });
-        
+        });
+
     });
 
     /* 1. Visualizing things on Hover - See next part for action on click */
@@ -211,21 +214,24 @@ Reference: http://jsfiddle.net/BB3JK/47/
             var difficultyId = 0;
             var switchVal = $(this).text();
             console.log(switchVal);
-            switch(switchVal) {
+            switch (switchVal) {
                 case "Basic":
-                difficultyId = 1;
-                break;
+                    difficultyId = 1;
+                    break;
                 case "Intermediate":
-                difficultyId = 2;
-                break;
+                    difficultyId = 2;
+                    break;
                 case "Advanced":
-                difficultyId = 3;
-                break;
+                    difficultyId = 3;
+                    break;
                 default:
-                difficultyId = 0;
+                    difficultyId = 0;
             }
-            chrome.runtime.sendMessage({type: "click-difficulty", videoLink: videoId, difficulty: difficultyId}, function(response) {
-            });
+            chrome.runtime.sendMessage({
+                type: "click-difficulty",
+                videoLink: videoId,
+                difficulty: difficultyId
+            }, function(response) {});
         });
 
         $(document).click(function() {
@@ -234,44 +240,47 @@ Reference: http://jsfiddle.net/BB3JK/47/
         });
 
     });
-    $('select').on('change', function(){
+    $('select').on('change', function() {
         var option = $(this).val()
         console.log(option)
     })
     /* 2. Action to perform on click */
-    $('#stars li').on('click', function(){
-      var onStar = parseInt($(this).data('value'), 10); // The star currently selected
-      var stars = $(this).parent().children('li.star');
-      
-      for (i = 0; i < stars.length; i++) {
-        $(stars[i]).removeClass('selected');
-      }
-      
-      for (i = 0; i < onStar; i++) {
-        $(stars[i]).addClass('selected');
-      }
-      
-      // JUST RESPONSE (Not needed)
-      var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-      var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
-    //   var difficultyId = 0;
-    //   var switchVal = $("#flags").val();
-    //   console.log(switchVal);
-    //   switch(switchVal) {
-    //     case "basic":
-    //       difficultyId = 1;
-    //       break;
-    //     case "intermediate":
-    //       difficultyId = 2;
-    //       break;
-    //     case "advanced":
-    //       difficultyId = 3;
-    //       break;
-    //     default:
-    //       difficultyId = 0;
-    //   }
-    //   console.log(difficultyId);
-      chrome.runtime.sendMessage({type: "click-star", videoLink: videoId, rating: ratingValue}, function(response) {
-      });
+    $('#stars li').on('click', function() {
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
+        //   var difficultyId = 0;
+        //   var switchVal = $("#flags").val();
+        //   console.log(switchVal);
+        //   switch(switchVal) {
+        //     case "basic":
+        //       difficultyId = 1;
+        //       break;
+        //     case "intermediate":
+        //       difficultyId = 2;
+        //       break;
+        //     case "advanced":
+        //       difficultyId = 3;
+        //       break;
+        //     default:
+        //       difficultyId = 0;
+        //   }
+        //   console.log(difficultyId);
+        chrome.runtime.sendMessage({
+            type: "click-star",
+            videoLink: videoId,
+            rating: ratingValue
+        }, function(response) {});
     });
 });
