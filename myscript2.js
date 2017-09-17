@@ -45,7 +45,7 @@ var ratingScore = "\
     <i class='fa fa-star fa-fw'></i>\
   </li>\
 </ul>\
-Rating: <li class='scoreNum'></li>\
+<li class='scoreNum'></li>/5\
 </div>"
 
 $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
