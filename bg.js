@@ -13,12 +13,17 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
-chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type == "search") {
-    var redirectUrl = urlCreator(request.searchTerm);
-    chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {
-      chrome.tabs.update( tabs[0].id, { url: redirectUrl } ); 
-    });
+      var redirectUrl = urlCreator(request.searchTerm);
+      chrome.tabs.query({
+          active: true,
+          currentWindow: true
+      }, function(tabs) {
+          chrome.tabs.update(tabs[0].id, {
+              url: redirectUrl
+          });
+      });
   }
 });
 
@@ -70,15 +75,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if(request.type == "get-rating") {
-    var ref = database.ref("videos/" + request.videoLink);
-    ref.once("value").then(function(snapshot) {
-      if(snapshot.hasChild("rating")) {
-        sendResponse(snapshot.val().rating);
-      } else {
-        sendResponse("(Not rated yet)");
-      }
-    })
+  if (request.type == "get-rating") {
+      var ref = database.ref("videos/" + request.videoLink);
+      ref.once("value").then(function(snapshot) {
+          if (snapshot.hasChild("rating")) {
+              sendResponse({
+                  rating: snapshot.val().rating,
+                  count: snapshot.val().count
+              });
+          } else {
+              sendResponse({
+                  rating: "(Not rated yet)",
+                  count: 0
+              });
+          }
+      })
   }
   return true;
 });
