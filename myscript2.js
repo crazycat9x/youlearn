@@ -20,7 +20,7 @@ var rating = "\
 </ul>\
 </span>\
 <select class=\"drop-down\" name=\"flags\">\
-<option value=\"default\">(select tutorial difficulty)</option>\
+<option value=\"hide\">Select level</option>\
 <option value=\"useful\">Basic</option>\
 <option value=\"veryUseful\">Intermediate</option>\
 <option value=\"extremelyUseful\">Advanced</option>\

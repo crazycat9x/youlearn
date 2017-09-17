@@ -105,7 +105,7 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #c0392b;
+  background-color: #F74C43;
   padding: 8px 15px;
   -moz-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
@@ -123,10 +123,10 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
   right: 10px;
 }
 .select-styled:hover {
-  background-color: #b83729;
+  background-color: #F74C43;
 }
 .select-styled:active, .select-styled.active {
-  background-color: #ab3326;
+  background-color: #F74C43;
 }
 .select-styled:active:after, .select-styled.active:after {
   top: 9px;
@@ -143,20 +143,20 @@ ytd-section-list-renderer.ytd-two-column-search-results-renderer {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: #ab3326;
+  background-color: #F8332C;
 }
 .select-options li {
   margin: 0;
   padding: 12px 0;
   text-indent: 15px;
-  border-top: 1px solid #962d22;
+  border-top: 1px solid #F74C43;
   -moz-transition: all 0.15s ease-in;
   -o-transition: all 0.15s ease-in;
   -webkit-transition: all 0.15s ease-in;
   transition: all 0.15s ease-in;
 }
 .select-options li:hover {
-  color: #c0392b;
+  color: #F74C43;
   background: #fff;
 }
 .select-options li[rel="hide"] {
