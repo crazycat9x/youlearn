@@ -62,11 +62,11 @@ $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-rend
         } else {
           element.find("li.scoreNum").html(response);
         }
-        var width = 80 * response / 5
-        if(width) {
-          var widthString = parseInt(width).toString() + "px";
-          console.log(widthString);
-          element.find("ul#overallStars").css({"width": widthString, "height": "16px", "overflow": "hidden"});
+        if(response) {
+          stars = element.find("ul#overallStars").children('li.star')
+          for (i = 0; i < parseInt(response); i++) {
+            $(stars[i]).addClass('selected');
+          }
         }
       });
     });
