@@ -59,7 +59,7 @@ $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-rend
       var element = $(this);
       chrome.runtime.sendMessage({type: 'get-rating', videoLink: link}, function(response) {
         if(parseInt(response)) {
-          element.find("li.scoreNum").html(parseInt(response));
+          element.find("li.scoreNum").html(parseInt(response) + "/5");
         } else {
           element.find("li.scoreNum").html(response);
         }
