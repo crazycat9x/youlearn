@@ -49,6 +49,12 @@ $(document).ready(function() {
 </ul>\
 </div>"
 
+
+
+    var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
+
+   
+
     $(ratingScore).appendTo("ytd-video-meta-block#meta.style-scope.ytd-playlist-renderer");
     $("div#contents.style-scope.ytd-item-section-renderer > ytd-playlist-renderer").each(function() {
         $(this).append(rating)
@@ -57,6 +63,9 @@ $(document).ready(function() {
     $("#content a.ytd-playlist-renderer").each(function(index) {
         var link = $(this).attr('href');
         var element = $(this);
+
+        // console.log(link);
+
         chrome.runtime.sendMessage({
             type: 'get-rating',
             videoLink: link
@@ -73,6 +82,15 @@ $(document).ready(function() {
                 }
             }
         });
+
+        var playlistId = link.substring(link.indexOf('&list=')+6);
+        // console.log(playlistId);
+        yt.getPlaylistInformation(playlistId).then(Data => {
+            // console.log(Data);
+            var dateCreated = "<div class='dateCreated'>" + Data.snippet.publishedAt + "</div>";
+            element.find("li.scoreNum").append(dateCreated);
+  
+          });
     });
 
     /* 1. Visualizing things on Hover - See next part for action on click */
@@ -162,7 +180,6 @@ Reference: http://jsfiddle.net/BB3JK/47/
         var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
         var videoId = $('#stars li.selected').last().parent().parent().parent().parent().find("a").attr('href');
 
-
         chrome.runtime.sendMessage({
             type: "click-star",
             videoLink: videoId,
@@ -171,12 +188,6 @@ Reference: http://jsfiddle.net/BB3JK/47/
         });
     });
 
-    var yt = new YTLib("AIzaSyAXyjwTcQU0qXOM5vCHbKYPk5szI8OmoC8");
-    var playlistId = "PLoYCgNOIyGABj2GQSlDRjgvXtqfDxKm5b";
 
-    yt.getPlaylistInformation(playlistId).then(Data => {
-      console.log(Data);
-      console.log("1111111");
-    });
 
 });
